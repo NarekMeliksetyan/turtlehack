@@ -3,6 +3,11 @@
 import rospy
 from sensor_msgs.msg import LaserScan
 
+def print_ranges(ranges):
+	res = []
+	for el in ranges:
+		print(el)
+
 def callback(msg):
     print (msg.ranges)
  
