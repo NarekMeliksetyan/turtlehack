@@ -19,13 +19,13 @@ def get_av(grp):
 		summ = 0
 	return res
 
-def parse_msgs(tupl):
+def parse_msgs(ranges):
 	cnt = 0
 	grp = []
 	temp = []
-	tup = list(tupl)
+	lst = list(ranges)
 
-	for el in tup:
+	for el in lst:
 		if el != 'inf':
 			temp += [float(el)]
 		cnt += 1
