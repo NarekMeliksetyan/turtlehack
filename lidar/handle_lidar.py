@@ -19,10 +19,11 @@ def get_av(grp):
 		summ = 0
 	return res
 
-def parse_msgs(tup):
+def parse_msgs(tupl):
 	cnt = 0
 	grp = []
 	temp = []
+	tup = list(tupl)
 
 	for el in tup:
 		if el != 'inf':
