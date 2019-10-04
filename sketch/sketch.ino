@@ -72,6 +72,7 @@ void setup(){
 }
 
 void loop(){
+  level.write(LEVEL_UP);
   nh.spinOnce();
   delay(1);
 }
