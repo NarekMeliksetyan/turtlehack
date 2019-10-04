@@ -38,12 +38,6 @@ while (cap.isOpened()):
 				cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 255), 3)
 				cv2.imshow('frame', frame)
 
-			roImg = frameCopy[y : y + h, x : x + w]
-			roImg = cv2.resize(roImg, (64, 64))
-			cv2.inRange(roImg, (58, 255, 62), (255, 255, 255))
-			cv2.imshow('Resized ROIq', roImg)
-
-
 		if (cv2.waitKey(1) & 0xFF == ord('q')):
 			break
 	else:
