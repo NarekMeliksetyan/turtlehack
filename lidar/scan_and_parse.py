@@ -21,16 +21,14 @@ def get_av(grp):
 		summ = 0
 	return res
 
-def parse_msgs(str_in):
+def parse_msgs(tup):
+	cnt = 0
 	grp = []
 	temp = []
-	cnt = 0
-	st = str_in[1:-1]
-	lst = st.split(', ')
 
-	for i in range(len(lst)):
-		if lst[i] != 'inf':
-			temp += [float(lst[i])]
+	for el in tup:
+		if el != 'inf':
+			temp += [float(el)]
 		cnt += 1
 		if cnt == 15:
 			cnt = 0
