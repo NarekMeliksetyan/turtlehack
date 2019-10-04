@@ -8,8 +8,6 @@ def callback(msg):
 	for el in res:
 		print(el)
 
-	print(msg.ranges)
-
 def get_av(grp):
 	summ = 0.0
 	res = []
