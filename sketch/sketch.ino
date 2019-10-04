@@ -32,6 +32,44 @@ ros::NodeHandle_<NewHardware>  nh;
 
 CRGB leds[NUM_LEDS];
 
+int   state;
+
+inline void raise_claw(void)
+{
+  if (! state & 0x1)
+  {
+    level.write(LEVEL_UP);
+    state |= 0x1;
+  }
+}
+
+inline void lower_claw(void)
+{
+  if (state & 0x1)
+  {
+    level.write(LEVEL_DOWN);
+    state &= 0x2;
+  }
+}
+
+inline void open_claw(void)
+{
+  if (! state & 0x2)
+  {
+    level.write(CLAW_OPEN);
+    state |= 0x2;
+  }
+}
+
+inline void close_claw(void)
+{
+  if (state & 0x2)
+  {
+    level.write(CLAW_CLOSED);
+    state &= 0x1;
+  }
+}
+
 void lidar_cb( const std_msgs::UInt32MultiArray& message){
   FastLED.clear();
   for (unsigned i = 0; i < message.data_length && i < NUM_LEDS; i++)
@@ -43,17 +81,17 @@ void lidar_cb( const std_msgs::UInt32MultiArray& message){
 
 void claw_cb( const std_msgs::Char& message){
   switch (message.data) {
-    case 1:
-      level.write(LEVEL_UP);
+    case 'u':
+      raise_claw();
       break;
-    case 2:
-      level.write(LEVEL_DOWN);
+    case 'd':
+      lower_claw();
       break;
-    case 3:
-      claw.write(CLAW_OPEN);
+    case 'o':
+      open_claw();
       break;
-    case 4:
-      claw.write(CLAW_CLOSED);
+    case 'c':
+      close_claw();
       break;
   }
 }
@@ -69,10 +107,11 @@ void setup(){
   nh.subscribe(sub_claw);
   FastLED.addLeds<WS2812, DIODE_PIN>(leds, NUM_LEDS);
   FastLED.clear();
+  raise_claw();
+  open_claw();
 }
 
 void loop(){
-  level.write(LEVEL_UP);
   nh.spinOnce();
   delay(1);
 }
