@@ -7,7 +7,7 @@ from std_msgs.msg import UInt32MultiArray, Char
 class Arduino(object):
     def __init__(self,
                  min_distance=0.12,
-                 max_distance=0.5,
+                 max_distance=0.9,
                  lidar_queue_size=10,
                  claw_queue_size=10):
         self.min_distance = min_distance
@@ -77,10 +77,10 @@ def cmap_g(number, upper_bound, lower_bound):
 def cmap_b(number, upper_bound, lower_bound):
     if number > upper_bound or number < lower_bound:
         return 0
-    mid = 2 * (upper_bound - lower_bound)
+    mid = lower_bound + 0.5 * (upper_bound - lower_bound)
     diff = number - mid
     decrease = diff if diff > 0 else -diff
-    return int(255 * (1 - decrease / mid))
+    return int(255 * (1 - 2 * decrease / (upper_bound - lower_bound)))
 
 def cmap_r(number, upper_bound, lower_bound):
     if number > upper_bound:
