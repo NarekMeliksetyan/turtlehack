@@ -3,7 +3,7 @@
 import rospy
 import lidar
 from arduino import Arduino
-from grabber import Grubber
+from grubber import Grubber
 
 
 if __name__ == '__main__':

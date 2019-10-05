@@ -6,8 +6,8 @@ from std_msgs.msg import UInt32MultiArray, Char
 
 class Arduino(object):
     def __init__(self,
-                 min_distance=0,
-                 max_distance=1,
+                 min_distance=0.12,
+                 max_distance=0.5,
                  lidar_queue_size=10,
                  claw_queue_size=10):
         self.min_distance = min_distance
@@ -41,8 +41,6 @@ class Arduino(object):
         self.lower_claw()
         time.sleep(1)
         self.close_claw()
-        time.sleep(1)
-        self.raise_claw()
 
     def upper_grub(self):
         self.raise_claw()

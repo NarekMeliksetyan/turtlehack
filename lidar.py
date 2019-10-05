@@ -7,7 +7,8 @@ from std_msgs.msg import UInt32MultiArray
 
 
 def parse_lidar_msg(msg):
-    ranges = msg.ranges
+    ranges = list(msg.ranges)
+    ranges.reverse()
     step = int(len(ranges) / 24)
     chunks = []
     for i in range(0, len(ranges), step):
