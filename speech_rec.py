@@ -3,6 +3,7 @@
 
 import os
 import sys
+import json
 
 def distance(a, b):
 	n, m = len(a), len(b)
@@ -21,21 +22,20 @@ def distance(a, b):
 	return current_row[n]
 
 def runProgramm(text, filename):
-	b = [(56, 234, 81), (255, 255, 255),
-             (56, 234, 81), (255, 255, 255),
-             (56, 234, 81), (255, 255, 255),
-             (56, 234, 81), (255, 255, 255)]
+	b = [[(56, 234, 81), (255, 255, 255)],
+             [(56, 234, 81), (255, 255, 255)],
+             [(56, 234, 81), (255, 255, 255)],
+             [(56, 234, 81), (255, 255, 255)]]
 	a = list()
 	a.append(distance(text, "принеси мне синюю губку"))
 	a.append(distance(text, "принеси мне зеленую губку"))
 	a.append(distance(text, "принеси мне желтую губку"))
 	a.append(distance(text, "принеси мне красную губку"))
-	m = min(a)
-	if (a.count(m) == 1):
-                json.dump(a[m], filename)
-                os.system("cat color.json")
-                exit()
-
+	m = min(enumerate(a), key=lambda x: x[1])[0]
+	json.dump(b[m], open(filename, "w", encoding="utf-8"))
+	os.system("cat color.json")
+	exit()
+"""
 #Для установки библиотек:
 com_list = []
 com_list += ["sudo apt install python3-pip"]
@@ -44,6 +44,7 @@ com_list += ["pip3 install PyAudio"]
 com_list += ["pip3 install SpeechRecognition "]
 for com in com_list:
 	os.system(com)
+"""
 
 import speech_recognition as sr
 
