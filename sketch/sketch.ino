@@ -89,8 +89,8 @@ void setup(){
   nh.subscribe(sub_claw);
   FastLED.addLeds<WS2812, DIODE_PIN>(leds, NUM_LEDS);
   FastLED.clear();
-  raise_claw();
-  close_claw();
+  lower_claw();
+  open_claw();
 }
 
 void loop(){
