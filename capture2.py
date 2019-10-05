@@ -22,7 +22,9 @@ while (cap.isOpened()):
 			cv2.drawContours(frame, best_fit, 0, (255, 0, 255), 3)
 			(x, y, w, h) = cv2.boundingRect(best_fit)
 			cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 255), 3)
-			coordinates.append(((x-(x+w)/2), (y-(y+h)/2)))
+			coordinates.append((int((x+(x+w)/2)), int((y+(y+h)/2))))
+			cv2.drawMarker(frame, (int((x+(x+w))/2), int((y+(y+h))/2)), (0, 255, 255))
+			cv2.imwrite("image_processed.png", frame)
 			break
 	else:
 		break
