@@ -7,18 +7,28 @@ from std_msgs.msg import UInt32MultiArray, Char
 
 
 class Pointer(object):
-    def __init__(self):
+    def __init__(self, lidar):
         self.blocked = False
         self.recieved = False
         self.sub = rospy.Subscriber('/target_coord', UInt32MultiArray, self.callback)
+        self.lidar = lidar
 
     def callback(self, msg):
         if self.blocked:
             return
         data = msg.data
         data = list(map(float, data))
-        self.angle = 45 * (data[0] - 320) / 320
-        self.distance = 5 * sin(self.angle * m.pi / 180)
+        self.angle = 45 * (data[0] - 320) / 320 * m.pi / 180
+        self.distance_fallback = 5 * sin(self.angle)
+        lidar_data = self.lidar.msg.data
+        andgle = lidar_data.angle_min
+        index = 0
+        while (self.angle > angle):
+            angle += lidar_data.angle_increment
+            if anlge > m.pi:
+                angle -= 2 * m.pi
+            index++
+        self.distance = lidar_data.ranges[index]
         self.recieved = True
 
     def block(self):

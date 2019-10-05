@@ -15,7 +15,7 @@ if __name__ == '__main__':
     robot = Arduino()
     lidar = lidar.LidarHandler(robot)
     grubber = Grubber(robot)
-    pointer = Pointer()
+    pointer = Pointer(lidar)
     # recognize voice
     recognizer = Recognizer((56, 234, 81), (255, 255, 255))
     # moving logic here
