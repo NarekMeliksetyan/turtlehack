@@ -19,14 +19,14 @@ class Pointer(object):
         data = msg.data
         data = list(map(float, data))
         self.angle = 45 * (data[0] - 320) / 320 * m.pi / 180
+        if self.angle < 0:
+            self.angle = 2 * m.pi + self.angle
         self.distance_fallback = 5 * sin(self.angle)
         lidar_data = self.lidar.msg.data
         andgle = lidar_data.angle_min
         index = 0
         while (self.angle > angle):
             angle += lidar_data.angle_increment
-            if anlge > m.pi:
-                angle -= 2 * m.pi
             index++
         self.distance = lidar_data.ranges[index]
         self.recieved = True

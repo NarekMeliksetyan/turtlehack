@@ -20,21 +20,22 @@ def distance(a, b):
 			current_row[j] = min(add, delete, change)
 	return current_row[n]
 
-def runProgramm(text, f):
-	b = ["blue", "green", "yellow"]
+def runProgramm(text, filename):
+	b = [(56, 234, 81), (255, 255, 255),
+             (56, 234, 81), (255, 255, 255),
+             (56, 234, 81), (255, 255, 255),
+             (56, 234, 81), (255, 255, 255)]
 	a = list()
 	a.append(distance(text, "принеси мне синюю губку"))
 	a.append(distance(text, "принеси мне зеленую губку"))
 	a.append(distance(text, "принеси мне желтую губку"))
+	a.append(distance(text, "принеси мне красную губку"))
 	m = min(a)
 	if (a.count(m) == 1):
-		print(b[a.index(m)], file = f)
-		f.close()
-		os.system("./start.sh ")
-		os.system("cat color.txt")
-		exit()
+                json.dump(a[m], filename)
+                os.system("cat color.json")
+                exit()
 
-"""
 #Для установки библиотек:
 com_list = []
 com_list += ["sudo apt install python3-pip"]
@@ -43,11 +44,9 @@ com_list += ["pip3 install PyAudio"]
 com_list += ["pip3 install SpeechRecognition "]
 for com in com_list:
 	os.system(com)
-"""
 
 import speech_recognition as sr
 
-f = open('color.txt', 'w')
 print("Speak!")
 while True:
 	try:
@@ -58,6 +57,6 @@ while True:
 			audio = record.listen(source)
 			result=record.recognize_google(audio,language="ru_RU")
 			result = result.lower()
-			runProgramm(format(result), f)
+			runProgramm(format(result), 'color.json')
 	except sr.UnknownValueError:
 		print('Сервис google не отвечает')

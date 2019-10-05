@@ -3,6 +3,8 @@
 import rospy
 import lidar
 import time
+import move
+import json
 from arduino import Arduino
 from grubber import Grubber
 from recognizer import Recognizer
@@ -16,22 +18,18 @@ if __name__ == '__main__':
     lidar = lidar.LidarHandler(robot)
     grubber = Grubber(robot)
     pointer = Pointer(lidar)
-    # recognize voice
-    recognizer = Recognizer((56, 234, 81), (255, 255, 255))
-    # moving logic here
+    a, b = json.load('~/color.json')
+    recognizer = Recognizer(a, b)
+    move.MoveBase(0.2, 1.1, 3.14)
     recognizer_thread = Thread(group=None, target=recognizer.run)
     recognizer_thread.start()
     recognizer_thread.join(timeout=10)
-    while True:
-        x = 10 ** 10
-        x = 10 ** 10
-        x = 10 ** 10
-        x = 10 ** 10
-        x = 10 ** 10
-        x = 10 ** 10
     time.sleep(3)
     grubber.block()
-    # moving again
+    move.MoveBaseRelative(0, pointer.angle)
+    move.MoveBaseRelative(pointer.distance, 0)
     grubber.grub()
-    # move back
-    rospy.spin()
+    move.MoveBaseRelative(-0.1, 0)
+    robot.raise_claw()
+    move.MoveBase(0, 0, 3.14)
+    robot.release()
