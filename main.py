@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 
-import lidar.py
+import rospy
+import lidar
+from arduino import Arduino
+from grubber import Grubber
+
 
 if __name__ == '__main__':
-    robot = Arduino()
     rospy.init_node('main')
+    robot = Arduino()
+    lidar = lidar.LidarHandler(robot)
+    grubber = Grubber(robot)
     rospy.spin()
