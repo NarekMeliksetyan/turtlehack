@@ -4,7 +4,7 @@ import rospy
 import time
 from sensor_msgs.msg import LaserScan
 from std_msgs.msg import UInt32MultiArray
-from arduino import Arduino
+
 
 def parse_lidar_msg(msg):
     ranges = msg.ranges
@@ -17,7 +17,7 @@ def parse_lidar_msg(msg):
         chunks.append(filtered_data)
     return list(map(lambda x: min(x) if x else 200, chunks))
 
-`
+
 class LidarHandler(object):
     def __init__(self, robot):
         self.robot = robot

@@ -21,6 +21,7 @@ class Arduino(object):
         self.claw = rospy.Publisher('claw',
                                     Char,
                                     queue_size=claw_queue_size)
+        time.sleep(1)
         self.raise_claw()
         self.open_claw()
 
@@ -63,7 +64,7 @@ class Arduino(object):
 
     def update_lidar_data(self, data):
         colors = list(map(self.eval_color, data))
-        print(list(map(hex, colors)))
+        #print(list(map(hex, colors)))
         package = UInt32MultiArray(data=colors)
         self.lidar.publish(package)
 
