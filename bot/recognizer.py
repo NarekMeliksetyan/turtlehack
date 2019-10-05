@@ -1,4 +1,6 @@
 import cv2
+import rospy
+from std_msgs.msg import Float32 
 
 
 class Recognizer(object):
@@ -6,21 +8,22 @@ class Recognizer(object):
         self.cap = cv2.VideoCapture(0)
         self.minc = minc
         self.maxc = maxc
+        self.pub = rospy.Publisher('target_position', Float32, queue_size=1)
 
     def recognize(self):
-        ret, frame = cap.read()
+        ret, frame = self.cap.read()
         if not ret:
             return None
-        hsv = cv2.cvtColor(frame, cv.COLOR_BGR2HSV)
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         mask = cv2.inRange(hsv, self.minc, self.maxc)
-        mask = cv2.erod(mask, None, iterations=2)
+        mask = cv2.erode(mask, None, iterations=2)
         mask = cv2.dilate(mask, None, iterations=2)
         _, cont, hier = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-        f = any([item.any() for item in count])
+        f = any([item.any() for item in cont])
         if (f):
             best_fit = max(cont, key=cv2.contourArea)
             x, y, w, h = cv2.boundingRect(best_fit)
-            return [x + 0.5 * w, y + 0.5 * h)]+ list(frame.shape)
+            return [x + 0.5 * w, y + 0.5 * h]+ list(frame.shape)
         return None
 
     def run(self):
@@ -29,4 +32,5 @@ class Recognizer(object):
             print(values)
             if values is None:
                 continue
+            self.pub.publish(1 - values[0] / values[2])
         self.cap.release()

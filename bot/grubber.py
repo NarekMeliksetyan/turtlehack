@@ -8,7 +8,7 @@ FREE = 0
 BUSY = 1
 UP = 0
 DOWN = 1
-DEFAULT_THRESHOLD = 200
+DEFAULT_THRESHOLD = 0.5
 
 
 class Grubber(object):
