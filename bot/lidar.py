@@ -25,6 +25,7 @@ class LidarHandler(object):
         self.sub = rospy.Subscriber('/scan', LaserScan, self.callback)
 
     def callback(self, msg):
+        self.msg = msg
         data = parse_lidar_msg(msg)
         self.robot.update_lidar_data(data)
 
