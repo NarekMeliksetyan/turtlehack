@@ -1,6 +1,7 @@
 import cv2
 import rospy
 from std_msgs.msg import Float32 
+from std_msgs.msg import UInt32MultiArray, Char
 
 
 class Recognizer(object):
@@ -9,6 +10,7 @@ class Recognizer(object):
         self.minc = minc
         self.maxc = maxc
         self.pub = rospy.Publisher('/target_position', Float32, queue_size=1)
+        self.pub2 = rospy.Publisher('/target_coord', UInt32MultiArray, queue_size=1)
 
     def recognize(self):
         ret, frame = self.cap.read()
@@ -33,4 +35,5 @@ class Recognizer(object):
             if values is None:
                 continue
             self.pub.publish(Float32(1 - float(values[1]) / values[2]))
+            self.pub2.publish(UInt32MultiArray(values))
         self.cap.release()
