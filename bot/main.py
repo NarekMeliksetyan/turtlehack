@@ -22,6 +22,11 @@ if __name__ == '__main__':
     # grub
     recognizer_thread.join(timeout=10)
     while True:
-        print(grubber.position)
+        x = 10 ** 10
+        x = 10 ** 10
+        x = 10 ** 10
+        x = 10 ** 10
+        x = 10 ** 10
+        x = 10 ** 10
     # move back
     rospy.spin()

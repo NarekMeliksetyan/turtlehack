@@ -8,7 +8,7 @@ class Recognizer(object):
         self.cap = cv2.VideoCapture(0)
         self.minc = minc
         self.maxc = maxc
-        self.pub = rospy.Publisher('target_position', Float32, queue_size=1)
+        self.pub = rospy.Publisher('/target_position', Float32, queue_size=1)
 
     def recognize(self):
         ret, frame = self.cap.read()
@@ -32,5 +32,5 @@ class Recognizer(object):
             print(values)
             if values is None:
                 continue
-            self.pub.publish(1 - values[0] / values[2])
+            self.pub.publish(Float32(1 - float(values[1]) / values[2]))
         self.cap.release()
